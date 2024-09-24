@@ -1,5 +1,5 @@
 #!/bin/bash
-
+apt-get install -y libpq-dev
 # Build the project
 echo "Building the project..."
 python3 -m pip install -r requirements.txt
