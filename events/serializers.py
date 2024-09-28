@@ -31,4 +31,4 @@ class RegistrationSerializer(serializers.ModelSerializer):
     team = TeamSerializer(required = False)
     class Meta:
         model = models.Registration
-        fields = ['participant','event','team','total_price','payment_status','payment_proof']
+        fields = ['participant','event','team','total_price','payment_status']

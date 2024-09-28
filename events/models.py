@@ -51,7 +51,7 @@ class Registration(models.Model):
     payment_status = models.BooleanField(default=False)
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
     registered_at = models.DateTimeField(auto_now_add=True)
-    payment_proof = models.FileField(upload_to="uploads/",blank=True,null=True)
+    # payment_proof = models.FileField(upload_to="uploads/",blank=True,null=True)
 
     def __str__(self):
         return f"{self.participant} - {self.event}"
