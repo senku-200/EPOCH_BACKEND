@@ -1,10 +1,17 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status,viewsets
 from django.db import transaction
-from .models import Event, Participant, Registration, Team
-from .serializers import RegistrationSerializer
+from .models import Event, Participant, Registration, Team,Incharge
+from .serializers import RegistrationSerializer,EventSerializer,InchargeSerializer
 from django.core.exceptions import ObjectDoesNotExist
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+class InchargeViewSet(viewsets.ModelViewSet):
+    queryset = Incharge.objects.all()
+    serializer_class = InchargeSerializer
 
 def get_or_create_participant(participant_data):
     participant, created = Participant.objects.get_or_create(
@@ -60,7 +67,7 @@ def register_participant(request):
         registered_events = []
 
         for event_data in events_data:
-            event_id = event_data.get('event_id')
+            event_id = event_data.get('id')
             team_members_details = event_data.get('team_members', None)
             try:
                 event = Event.objects.get(id=event_id)
