@@ -12,6 +12,9 @@ class EventViewSet(viewsets.ModelViewSet):
 class InchargeViewSet(viewsets.ModelViewSet):
     queryset = Incharge.objects.all()
     serializer_class = InchargeSerializer
+class registerViewSet(viewsets.ModelViewSet):
+    queryset = Registration.objects.all()
+    serializer_class = RegistrationSerializer
 
 def get_or_create_participant(participant_data):
     participant, created = Participant.objects.get_or_create(
@@ -51,6 +54,7 @@ def handle_registration(participant, event, team_members_details=None):
         return register_to_event(participant, event, team)
     else:
         return register_to_event(participant, event)
+
 
 @api_view(['POST'])
 @transaction.atomic
