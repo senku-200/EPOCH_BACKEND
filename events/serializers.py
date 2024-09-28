@@ -4,8 +4,7 @@ from .models import Category, Incharge, Event, Participant, Team, Registration
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["name"]
-
+        fields = ['id','name']
 class InchargeSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=True)
 
@@ -14,6 +13,7 @@ class InchargeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class EventSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source='category.name', read_only=True)
     class Meta:
         model = Event
         fields = '__all__'

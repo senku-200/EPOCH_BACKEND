@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status,viewsets
 from django.db import transaction
-from .models import Event, Participant, Registration, Team,Incharge
-from .serializers import RegistrationSerializer,EventSerializer,InchargeSerializer
+from .models import Event, Participant, Registration, Team,Incharge,Category
+from .serializers import RegistrationSerializer,EventSerializer,InchargeSerializer,CategorySerializer
 from django.core.exceptions import ObjectDoesNotExist
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -12,6 +12,9 @@ class EventViewSet(viewsets.ModelViewSet):
 class InchargeViewSet(viewsets.ModelViewSet):
     queryset = Incharge.objects.all()
     serializer_class = InchargeSerializer
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 class registerViewSet(viewsets.ModelViewSet):
     queryset = Registration.objects.all()
     serializer_class = RegistrationSerializer
