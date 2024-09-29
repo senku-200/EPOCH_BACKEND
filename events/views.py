@@ -33,7 +33,7 @@ def register_to_event(participant, event, team=None):
         participant=participant,
         event=event,
         team=team,
-        total_price=event.price,
+        total_amount=event.price,
         payment_status=False
     )
     return registration
