@@ -26,13 +26,18 @@ SECRET_KEY = 'django-insecure-y9(i@1oqee7q3g3@5jd!vv&8lpo%z%r*4vdmn38@l0gzrrd4$z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app','127.0.0.1','localhost']
 
-
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    '.vercel.app'
+]
 # Application definition
 
 INSTALLED_APPS = [
     'events',
+    'corsheaders',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -135,3 +141,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Collected static files wi
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Enables the API browser view
+    ),
+}

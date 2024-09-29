@@ -1,31 +1,63 @@
 from django.db import models
-
+from django.core.exceptions import ValidationError
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self) -> str:
-        return self.name
-
-class Event(models.Model):
-    name = models.CharField(max_length=200)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    time_limit = models.CharField(max_length=100,null=True,blank=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    is_team = models.BooleanField(default=False)
-    max_team_size = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name
 
-    # def clean(self):
-    #     if self.is_team and (self.max_team_size is None or self.max_team_size <= 1):
-    #         raise ValidationError("Team events must have a max_team_size greater than 1.")
+class Incharge(models.Model):
+    name = models.CharField(max_length=100)
+    register_number = models.CharField(max_length=15)
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=15)
+    category = models.ManyToManyField(Category, related_name='eventIncharge')
+    
+    def __str__(self):
+        return self.name + " " + self.email
+
+class Event(models.Model):
+    DAY_CHOICES = [
+        ('day1', 'Day 1'),
+        ('day2', 'Day 2'),
+        ('day3', 'Day 3'),
+    ]
+    
+    name = models.CharField(max_length=200)
+    category = models.ForeignKey(Category, related_name='events', on_delete=models.CASCADE)
+    register_amount = models.DecimalField(max_digits=6, decimal_places=2)
+    time_limit = models.CharField(max_length=100, null=True, blank=True)
+    price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    is_team = models.BooleanField(default=False)
+    max_team_size = models.IntegerField(null=True, blank=True)
+    instructions = models.TextField(null=True, blank=True)
+    
+    # New fields
+    day = models.CharField(max_length=5, choices=DAY_CHOICES)  # e.g., 'day1', 'day2', 'day3'
+    timing = models.CharField(max_length=20)  # e.g., '11AM-1PM'
+    
+    def clean(self):
+        # Custom validation
+        if self.is_team and self.max_team_size is None:
+            raise ValidationError("Max team size must be specified for team events.")
+
+    def __str__(self):
+        return f"{self.name} ({self.category}) - {self.day} {self.timing}"
+
+    class Meta:
+        ordering = ['day', 'timing']
+
+GENDER = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+]
 
 class Participant(models.Model):
     name = models.CharField(max_length=100)
     register_number = models.CharField(max_length=15)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15)
+    gender = models.CharField(choices=GENDER, max_length=10)
 
     def __str__(self):
         return self.name
@@ -35,9 +67,8 @@ class Team(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     members = models.ManyToManyField(Participant, related_name="teamMembers")
 
-    # def clean(self):
-    #     if self.members.count() > self.event.max_team_size:
-    #         raise ValidationError(f"Team size cannot exceed {self.event.max_team_size} members.")
+    def __str__(self):
+        return self.name
 
 class Registration(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
