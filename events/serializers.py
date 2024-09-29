@@ -1,25 +1,39 @@
 from rest_framework import serializers
-from . import models
+from .models import Category, Incharge, Event, Participant, Team, Registration
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id','name']
+class InchargeSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True)
+
+    class Meta:
+        model = Incharge
+        fields = '__all__'
 
 class EventSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source='category.name', read_only=True)
     class Meta:
-        model = models.Event
+        model = Event
         fields = '__all__'
-        
-class ParticipantSerializer(serializers.ModelSerializer): 
+
+class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Participant
-        fields = ["name","registration_number","email","phone_number"]
+        model = Participant
+        fields = '__all__'
 
 class TeamSerializer(serializers.ModelSerializer):
-    participant = ParticipantSerializer()
+    members = ParticipantSerializer(many=True)  # Update to handle many-to-many
+
     class Meta:
-        model = models.Team
-        fields = ["members"]
+        model = Team
+        fields = '__all__'
 
 class RegistrationSerializer(serializers.ModelSerializer):
     participant = ParticipantSerializer()
-    team = TeamSerializer(required = False)
+    team = TeamSerializer(required=False)
+
     class Meta:
-        model = models.Registration
-        fields = ['participant','event','team','total_price','payment_status']
+        model = Registration
+        fields = '__all__'
