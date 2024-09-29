@@ -75,7 +75,7 @@ class Registration(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
     payment_status = models.BooleanField(default=False)
-    total_price = models.DecimalField(max_digits=6, decimal_places=2)
+    total_amount = models.DecimalField(max_digits=6, decimal_places=2,null=True,blank=True)
     registered_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
