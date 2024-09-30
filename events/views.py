@@ -51,12 +51,12 @@ def register_to_event(participant, event, team=None,total_amount=0):
     )
     return registration
 
-def handle_registration(participant, event, team_members_details=None):
+def handle_registration(participant, event, team_members_details=None,total_amount = 0):
     if event.is_team and team_members_details:
         team = handle_team_registration(participant, team_members_details, event)
-        return register_to_event(participant, event, team)
+        return register_to_event(participant, event, team,total_amount)
     else:
-        return register_to_event(participant, event)
+        return register_to_event(participant, event,total_amount)
 
 
 @api_view(['POST'])
