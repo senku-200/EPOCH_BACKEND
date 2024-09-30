@@ -25,7 +25,8 @@ def get_or_create_participant(participant_data):
         defaults={
             'register_number': participant_data['register_number'],
             'name': participant_data['name'],
-            'phone_number': participant_data['phone_number']
+            'phone_number': participant_data['phone_number'],
+            'gender':participant.data['gender']
         }
     )
     return participant
