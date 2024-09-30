@@ -26,7 +26,17 @@ def get_or_create_participant(participant_data):
             'register_number': participant_data['register_number'],
             'name': participant_data['name'],
             'phone_number': participant_data['phone_number'],
-            'gender':participant.data['gender']
+            'gender':participant_data['gender']
+        }
+    )
+    return participant
+def get_or_create_teammates(participant_data):
+    participant, created = Participant.objects.get_or_create(
+        email=participant_data['email'],
+        defaults={
+            'register_number': participant_data['register_number'],
+            'name': participant_data['name'],
+            'phone_number': participant_data['phone_number'],
         }
     )
     return participant
@@ -36,7 +46,7 @@ def handle_team_registration(participant, team_data, event):
     team, created = Team.objects.get_or_create(event=event, name=team_name)
     team.members.add(participant)
     for member_data in team_data:
-        member = get_or_create_participant(member_data)
+        member = get_or_create_teammates(member_data)
         team.members.add(member)
     
     return team
