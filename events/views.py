@@ -41,12 +41,12 @@ def handle_team_registration(participant, team_data, event):
     return team
 
 
-def register_to_event(participant, event, team=None):
+def register_to_event(participant, event, team=None,total_amount=0):
     registration = Registration.objects.create(
         participant=participant,
         event=event,
         team=team,
-        total_amount=event.price,
+        total_amount=total_amount,
         payment_status=False
     )
     return registration
@@ -66,6 +66,8 @@ def register_participant(request):
         data = request.data
         participant_data = data.get('participant')
         events_data = data.get('events', [])
+        total_amount = data.get('total_amount')
+        
 
         if not participant_data or not events_data:
             return Response({'error': 'Participant and events data are required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -81,7 +83,7 @@ def register_participant(request):
             except ObjectDoesNotExist:
                 return Response({'error': f'Event with ID {event_id} does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-            registration = handle_registration(participant, event, team_members_details)
+            registration = handle_registration(participant, event, team_members_details,total_amount)
             registered_events.append(registration)
 
         return Response({'status': 'Registration successful!'}, status=status.HTTP_201_CREATED)
