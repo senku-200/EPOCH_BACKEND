@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['.vercel.app','127.0.0.1','localhost']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://mea-epoch-frontend.vercel.app'
+    'https://phantasm25.vercel.app'
 ]
 # Application definition
 
