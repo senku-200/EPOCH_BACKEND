@@ -54,9 +54,9 @@ def register_to_event(participant, event, team=None,total_amount=0):
 def handle_registration(participant, event, team_members_details=None,total_amount = 0):
     if event.is_team and team_members_details:
         team = handle_team_registration(participant, team_members_details, event)
-        return register_to_event(participant, event, team,total_amount)
+        return register_to_event(participant, event, team,total_amount=total_amount)
     else:
-        return register_to_event(participant, event,total_amount)
+        return register_to_event(participant, event,total_amount=total_amount)
 
 
 @api_view(['POST'])
@@ -83,7 +83,7 @@ def register_participant(request):
             except ObjectDoesNotExist:
                 return Response({'error': f'Event with ID {event_id} does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-            registration = handle_registration(participant, event, team_members_details,total_amount)
+            registration = handle_registration(participant, event, team_members_details,total_amount=total_amount)
             registered_events.append(registration)
 
         return Response({'status': 'Registration successful!'}, status=status.HTTP_201_CREATED)
