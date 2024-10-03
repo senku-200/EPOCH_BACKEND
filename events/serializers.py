@@ -24,7 +24,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TeamSerializer(serializers.ModelSerializer):
-    members = ParticipantSerializer(many=True)  # Update to handle many-to-many
+    members = ParticipantSerializer(many=True)
 
     class Meta:
         model = Team

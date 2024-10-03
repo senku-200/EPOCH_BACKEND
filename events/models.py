@@ -52,14 +52,23 @@ GENDER = [
     ('female', 'Female'),
 ]
 
+YEAR = [
+    ("1 year","1 year"),
+    ("2 year","2 year"),
+    ("3 year","3 year"),
+    ("4 year","4 year"),
+]
 class Participant(models.Model):
     name = models.CharField(max_length=100)
     register_number = models.CharField(max_length=15)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15)
     gender = models.CharField(choices=GENDER, max_length=10)
+    department = models.CharField(max_length=100)
+    college = models.CharField(max_length=300)
+    year = models.CharField(choices=YEAR, max_length=10)
 
-    def __str__(self):
+    def __str__(self):  
         return self.name
 
 class Team(models.Model):

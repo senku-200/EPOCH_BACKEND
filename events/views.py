@@ -26,7 +26,10 @@ def get_or_create_participant(participant_data):
             'register_number': participant_data['register_number'],
             'name': participant_data['name'],
             'phone_number': participant_data['phone_number'],
-            'gender':participant_data['gender']
+            'gender':participant_data['gender'],
+            'year':participant_data['year'],
+            'department':participant_data['department'],
+            'college':participant_data['college']
         }
     )
     return participant
@@ -37,6 +40,10 @@ def get_or_create_teammates(participant_data):
             'register_number': participant_data['register_number'],
             'name': participant_data['name'],
             'phone_number': participant_data['phone_number'],
+            'gender':participant_data['gender'],
+            'year':participant_data['year'],
+            'department':participant_data['department'],
+            'college':participant_data['college']
         }
     )
     return participant
