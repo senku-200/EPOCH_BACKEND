@@ -1,2 +1,10 @@
-.env
+# Python
 *.pyc
+__pycache__/
+.env
+
+# Django
+db.sqlite3
+
+# Exclude compiled migration files
+migrations/__pycache__/
