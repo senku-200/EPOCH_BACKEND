@@ -27,11 +27,8 @@ SECRET_KEY = config('DJANGO_SECRET_KEY', default='django-insecure-y9(i@1oqee7q3g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
+CORS_ALLOWED_ORIGINS= config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000').split(',')
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'https://phantasm25.vercel.app'
-]
 # Application definition
 
 INSTALLED_APPS = [
@@ -94,7 +91,7 @@ DATABASES = {
         'ENGINE': config('ENGINE'),
         'HOST': config('HOST'),
         'NAME': config('NAME'),
-        'USER': config('NAME'),
+        'USER': config('USER'),
         'PASSWORD': config('PASSWORD'),
         'PORT': config('PORT'),
     }
@@ -145,6 +142,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',  # Enables the API browser view
+        'rest_framework.renderers.BrowsableAPIRenderer',  
     ),
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Gmail SMTP
+EMAIL_HOST = config("EMAIL_HOST") 
+EMAIL_PORT = config("EMAIL_PORT") 
+EMAIL_USE_TLS = config("EMAIL_PORT")
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') 
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')

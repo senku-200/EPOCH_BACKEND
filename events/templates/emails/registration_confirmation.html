@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "poppins";
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+      }
+      .email-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #000;
+        color: white;
+        padding: 20px;
+      }
+      .header {
+        text-align: center;
+        padding: 20px 0;
+      }
+      .header h1 {
+        font-size: 36px;
+        color: #ffa500;
+        margin: 0;
+      }
+      .header h2 {
+        font-size: 18px;
+        color: #ffa500;
+        margin: 10px 0 20px;
+      }
+      .logo {
+        max-width: 150px;
+        margin: 0 auto;
+      }
+      .content {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .content p {
+        font-size: 16px;
+        color: #ffa500;
+        margin: 10px 0;
+      }
+      .content .welcome {
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+      }
+      .event-table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+      }
+      .event-table th,
+      .event-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ffa500;
+      }
+      .event-table th {
+        background-color: #ffa500;
+        color: #000;
+      }
+      .event-table td {
+        background-color: #333;
+        color: white;
+      }
+      .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #ffa500;
+        margin-top: 20px;
+      }
+
+      /* Mobile Responsive */
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          padding: 10px;
+        }
+        .header h1 {
+          font-size: 28px;
+        }
+        .header h2 {
+          font-size: 16px;
+        }
+        .content .welcome {
+          font-size: 18px;
+        }
+        .event-table th,
+        .event-table td {
+          padding: 8px;
+          font-size: 14px;
+        }
+      }
+
+      @media only screen and (max-width: 400px) {
+        .header h1 {
+          font-size: 24px;
+        }
+        .header h2 {
+          font-size: 14px;
+        }
+        .content .welcome {
+          font-size: 16px;
+        }
+        .event-table th,
+        .event-table td {
+          padding: 6px;
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Logo -->
+      <div class="header">
+        <img src="https://phantasm25.vercel.app/_next/image?url=%2Fassests%2Fphantasm_logo.png&w=64&q=75" alt="Logo" class="logo" />
+        <h1>Phantasm'25</h1>
+        <h2>The Epoch</h2>
+      </div>
+
+      <!-- Welcome Message -->
+      <div class="content">
+        <p class="welcome">Welcome to Phantasm'25!</p>
+        <p>
+          Dear {{participant.name}}! We are pleased to confirm your successful registration for the event.
+          Thank you for joining us at this epoch-symposium event!
+        </p>
+        <p>
+          Below are the details of the events you've registered for. We hope you
+          enjoy the experience and have a safe journey!
+        </p>
+      </div>
+
+      <!-- Event Table -->
+      <table class="event-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Event Name</th>
+            <th>Day</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in events %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ event.name }}</td>
+            {% if event.day == "day1" %}
+              <td>22/10/2024</td>
+              {% elif event.day == "day2" %}
+              <td>23/10/2024</td>
+              {%elif event.day == "day3"%}
+              <td>24/10/2024</td>
+            {%endif%}
+            <td>{{ event.timing }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>We can't wait to see you at Phantasm25!</p>
+        <p>Safe travels and best regards,</p>
+        <p>The Phantasm25 Team</p>
+      </div>
+    </div>
+  </body>
+</html>
