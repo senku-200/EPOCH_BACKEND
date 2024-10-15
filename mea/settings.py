@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y9(i@1oqee7q3g3@5jd!vv&8lpo%z%r*4vdmn38@l0gzrrd4$z'
+SECRET_KEY = config('DJANGO_SECRET_KEY', default='django-insecure-y9(i@1oqee7q3g3@5jd!vv&8lpo%z%r*4vdmn38@l0gzrrd4$z')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['.vercel.app','127.0.0.1','localhost']
+DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
@@ -91,12 +91,12 @@ WSGI_APPLICATION = 'mea.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': "django.db.backends.postgresql_psycopg2",
-        'HOST': "aws-0-ap-south-1.pooler.supabase.com",
-        'NAME': "postgres",
-        'USER': "postgres.tnydavhywjgdslyamvwv",
-        'PASSWORD': "@Phantasam25",
-        'PORT': "6543",
+        'ENGINE': config('ENGINE'),
+        'HOST': config('HOST'),
+        'NAME': config('NAME'),
+        'USER': config('NAME'),
+        'PASSWORD': config('PASSWORD'),
+        'PORT': config('PORT'),
     }
 }
 
